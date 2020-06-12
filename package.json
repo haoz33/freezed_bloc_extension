@@ -1,10 +1,14 @@
 {
   "name": "freezed-bloc",
   "displayName": "freezed_bloc",
-  "description": "",
+  "description": "support for create bloc classes with freezed packages",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.46.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/QAQyzk/freezed_bloc_extension"
   },
   "publisher": "QAQyzk",
   "license": "",
@@ -40,7 +44,7 @@
         {
           "when": "true",
           "command": "extension.createFreezedBloc",
-          "group": "@freezed_bloc"
+          "group": "freezedBloc@1"
         }
       ]
     }
