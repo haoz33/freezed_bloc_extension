@@ -32,7 +32,7 @@
         {
           "when": "true",
           "command": "extension.createFreezedBloc",
-          "group": "7_modification"
+          "group": "@freezed_bloc"
         }
       ]
     }
