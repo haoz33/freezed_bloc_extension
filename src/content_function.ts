@@ -10,12 +10,32 @@ part '${bloc.getBlocName()}.freezed.dart';
 
 class ${bloc.getBlocClass()} extends Bloc<${bloc.getEventClass()},${bloc.getStateClass()}>{
   @override
-  OrderState get initialState => ${bloc.getStateClass()}.inital();
+  ${bloc.getStateClass()} get initialState => ${bloc.getStateClass()}.inital();
 
   @override
-  Stream<OrderState> mapEventToState(OrderEvent event) async* {
-    yield* event.when(
-    );
+  Stream<${bloc.getStateClass()}> mapEventToState(${bloc.getEventClass()} event) async* {
+    
   }
+}`;
+}
+
+export function getBlocStateContent(bloc: Bloc) {
+  return `part of '${bloc.getBlocFileName()}';
+
+@freezed
+abstract class ${bloc.getStateClass()} with _\$${bloc.getStateClass()} {
+  const factory ${bloc.getStateClass()}.inital() = _Inital;
+  const factory ${bloc.getStateClass()}.loadSuccess() = _LoadSuccess;
+  const factory ${bloc.getStateClass()}.loadFailure() = _LoadFailure;
+
+}`;
+}
+
+export function getBlocEventContent(bloc: Bloc) {
+  return `part of '${bloc.getBlocFileName()}';
+
+@freezed
+abstract class ${bloc.getEventClass()} with _\$${bloc.getEventClass()} {
+  const factory ${bloc.getEventClass()}.event1() = Event1;
 }`;
 }

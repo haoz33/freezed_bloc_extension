@@ -40,8 +40,8 @@ class Bloc {
     getBlocFiles(rootPath) {
         let r = [];
         r.push(new bloc_file_1.BlocFile(this.toPathName(rootPath, this.getBlocFileName()), content_function_1.getBlocContent(this)));
-        r.push(new bloc_file_1.BlocFile(this.toPathName(rootPath, this.getEventFileName()), ""));
-        r.push(new bloc_file_1.BlocFile(this.toPathName(rootPath, this.getStateFileName()), ""));
+        r.push(new bloc_file_1.BlocFile(this.toPathName(rootPath, this.getEventFileName()), content_function_1.getBlocEventContent(this)));
+        r.push(new bloc_file_1.BlocFile(this.toPathName(rootPath, this.getStateFileName()), content_function_1.getBlocStateContent(this)));
         return r;
     }
     toFileName(name) {

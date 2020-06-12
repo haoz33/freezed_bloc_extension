@@ -1,5 +1,9 @@
 import { join } from "path";
-import { getBlocContent } from "../content_function";
+import {
+  getBlocContent,
+  getBlocEventContent,
+  getBlocStateContent,
+} from "../content_function";
 import { BlocFile } from "./bloc_file";
 
 export class Bloc {
@@ -56,10 +60,16 @@ export class Bloc {
       )
     );
     r.push(
-      new BlocFile(this.toPathName(rootPath, this.getEventFileName()), "")
+      new BlocFile(
+        this.toPathName(rootPath, this.getEventFileName()),
+        getBlocEventContent(this)
+      )
     );
     r.push(
-      new BlocFile(this.toPathName(rootPath, this.getStateFileName()), "")
+      new BlocFile(
+        this.toPathName(rootPath, this.getStateFileName()),
+        getBlocStateContent(this)
+      )
     );
     return r;
   }
