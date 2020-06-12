@@ -1,7 +1,3 @@
-# freezed-bloc README
-
-This is the README for your extension "freezed-bloc". After writing up a brief description, we recommend including the following sections.
-
 ## Features
 
 1. create bloc folder with freezed state and event class.
@@ -9,8 +5,8 @@ This is the README for your extension "freezed-bloc". After writing up a brief d
 
 ## Requirements
 
-- freezed package
-- bloc package
+- [freezed package](https://pub.dev/packages/freezed)
+- [bloc package](https://pub.dev/packages/bloc)
 
 ## Known Issues
 
