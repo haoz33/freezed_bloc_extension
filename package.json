@@ -7,8 +7,15 @@
     "vscode": "^1.46.0"
   },
   "publisher": "QAQyzk",
+  "license": "",
   "categories": [
+    "Snippets",
     "Other"
+  ],
+  "keywords": [
+    "dart",
+    "bloc",
+    "freezed"
   ],
   "activationEvents": [
     "*",
