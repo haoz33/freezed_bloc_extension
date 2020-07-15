@@ -9,8 +9,7 @@ part '${bloc.getEventFileName()}';
 part '${bloc.getBlocName()}.freezed.dart';
 
 class ${bloc.getBlocClass()} extends Bloc<${bloc.getEventClass()},${bloc.getStateClass()}>{
-  @override
-  ${bloc.getStateClass()} get initialState => ${bloc.getStateClass()}.inital();
+  ${bloc.getBlocClass()}() : super(_Inital());
 
   @override
   Stream<${bloc.getStateClass()}> mapEventToState(${bloc.getEventClass()} event) async* {
@@ -25,6 +24,7 @@ export function getBlocStateContent(bloc: Bloc) {
 @freezed
 abstract class ${bloc.getStateClass()} with _\$${bloc.getStateClass()} {
   const factory ${bloc.getStateClass()}.inital() = _Inital;
+  const factory ${bloc.getStateClass()}.loading() = _Loading;
   const factory ${bloc.getStateClass()}.loadSuccess() = _LoadSuccess;
   const factory ${bloc.getStateClass()}.loadFailure() = _LoadFailure;
 

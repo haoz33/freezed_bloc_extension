@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.1.0]
+
+- updated to bloc version 5
+
 ## [0.0.3]
 
 - added exmaple usage.
