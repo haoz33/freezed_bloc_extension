@@ -19,9 +19,9 @@ exports.newFreezedBloc = (uri) => __awaiter(void 0, void 0, void 0, function* ()
         value: "_bloc",
         valueSelection: [0, 0],
     };
-    let dName = yield vscode.window.showInputBox(options);
-    if (dName != null) {
-        let bloc = new bloc_1.Bloc(dName);
+    let blocName = yield vscode.window.showInputBox(options);
+    if (blocName != null) {
+        let bloc = new bloc_1.Bloc(blocName);
         let targetDir;
         if (uri != undefined) {
             targetDir = uri.fsPath;

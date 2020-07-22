@@ -3,7 +3,7 @@ import {
   getBlocContent,
   getBlocEventContent,
   getBlocStateContent,
-} from "../content_function";
+} from "../util/content_function";
 import { BlocFile } from "./bloc_file";
 
 export class Bloc {

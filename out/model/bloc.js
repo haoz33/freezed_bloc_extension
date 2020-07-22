@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Bloc = void 0;
 const path_1 = require("path");
-const content_function_1 = require("../content_function");
+const content_function_1 = require("../util/content_function");
 const bloc_file_1 = require("./bloc_file");
 class Bloc {
     constructor(blocName) {

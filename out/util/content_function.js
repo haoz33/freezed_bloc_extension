@@ -1,7 +1,8 @@
-import { Bloc } from "./model/bloc";
-
-export function getBlocContent(bloc: Bloc): string {
-  return `import 'package:bloc/bloc.dart';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getBlocEventContent = exports.getBlocStateContent = exports.getBlocContent = void 0;
+function getBlocContent(bloc) {
+    return `import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '${bloc.getStateFileName()}';
@@ -17,9 +18,9 @@ class ${bloc.getBlocClass()} extends Bloc<${bloc.getEventClass()},${bloc.getStat
   }
 }`;
 }
-
-export function getBlocStateContent(bloc: Bloc) {
-  return `part of '${bloc.getBlocFileName()}';
+exports.getBlocContent = getBlocContent;
+function getBlocStateContent(bloc) {
+    return `part of '${bloc.getBlocFileName()}';
 
 @freezed
 abstract class ${bloc.getStateClass()} with _\$${bloc.getStateClass()} {
@@ -30,12 +31,14 @@ abstract class ${bloc.getStateClass()} with _\$${bloc.getStateClass()} {
 
 }`;
 }
-
-export function getBlocEventContent(bloc: Bloc) {
-  return `part of '${bloc.getBlocFileName()}';
+exports.getBlocStateContent = getBlocStateContent;
+function getBlocEventContent(bloc) {
+    return `part of '${bloc.getBlocFileName()}';
 
 @freezed
 abstract class ${bloc.getEventClass()} with _\$${bloc.getEventClass()} {
   const factory ${bloc.getEventClass()}.event1() = Event1;
 }`;
 }
+exports.getBlocEventContent = getBlocEventContent;
+//# sourceMappingURL=content_function.js.map

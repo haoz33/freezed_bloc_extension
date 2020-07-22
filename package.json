@@ -22,7 +22,7 @@
     "freezed"
   ],
   "activationEvents": [
-    "*",
+    "workspaceContains:**/pubspec.yaml",
     "onCommand:extension.createFreezedBloc"
   ],
   "main": "./out/extension.js",
@@ -37,6 +37,10 @@
       {
         "command": "extension.createFreezedBloc",
         "title": "Create freezed bloc"
+      },
+      {
+        "command": "extension.createNewBlocEvent",
+        "title": "Freezed Bloc: Create new bloc event"
       }
     ],
     "menus": {

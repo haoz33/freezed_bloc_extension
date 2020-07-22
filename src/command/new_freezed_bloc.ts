@@ -9,10 +9,10 @@ export const newFreezedBloc = async (uri: vscode.Uri) => {
     valueSelection: [0, 0],
   };
 
-  let dName = await vscode.window.showInputBox(options);
+  let blocName = await vscode.window.showInputBox(options);
 
-  if (dName != null) {
-    let bloc = new Bloc(dName);
+  if (blocName != null) {
+    let bloc = new Bloc(blocName);
     let targetDir: String;
 
     if (uri != undefined) {
