@@ -13,7 +13,7 @@ class ${bloc.getBlocClass()} extends Bloc<${bloc.getEventClass()},${bloc.getStat
   ${bloc.getBlocClass()}() : super(_Inital());
 
   @override
-  Stream<${bloc.getStateClass()}> mapEventToState(${bloc.getEventClass()} event) async* {
+  Stream<${bloc.getStateClass()}> mapEventToState(${bloc.getEventClass()} gEvent) async* {
     
   }
 }`;
@@ -25,7 +25,7 @@ function getBlocStateContent(bloc) {
 @freezed
 abstract class ${bloc.getStateClass()} with _\$${bloc.getStateClass()} {
   const factory ${bloc.getStateClass()}.inital() = _Inital;
-  const factory ${bloc.getStateClass()}.loading() = _Loading;
+  const factory ${bloc.getStateClass()}.loadInProgress() = _LoadInProgress;
   const factory ${bloc.getStateClass()}.loadSuccess() = _LoadSuccess;
   const factory ${bloc.getStateClass()}.loadFailure() = _LoadFailure;
 

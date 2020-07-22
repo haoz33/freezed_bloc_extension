@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.2.0]
+
+- **breaking**: changed from `event` to `gEvent`
+- renamed `fmap` snippet to `fmapToState`
+- added new snippet `ftoStateMap` for create new sub mapEventToState function for using `freezed.map`
+
 ## [0.1.1]
 
 - dependcy update
