@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.1.1]
+
+- dependcy update
+
 ## [0.1.0]
 
 - updated to bloc version 5
