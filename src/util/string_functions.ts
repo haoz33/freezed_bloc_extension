@@ -1,3 +1,7 @@
+export function capitalizeFirstLetter(str: string): string {
+  return str[0].toUpperCase() + str.slice(1);
+}
+
 export function toPascalCase(string: String) {
   return `${string}`
     .replace(new RegExp(/[-_]+/, "g"), " ")
