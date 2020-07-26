@@ -13,47 +13,55 @@ exports.createNewBlocEvent = void 0;
 const vscode = require("vscode");
 const path_1 = require("path");
 const string_functions_1 = require("../util/string_functions");
+const bloc_1 = require("../model/bloc");
 exports.createNewBlocEvent = (uri) => __awaiter(void 0, void 0, void 0, function* () {
-    let options = {
-        placeHolder: "event name",
-    };
-    let eventName = yield vscode.window.showInputBox(options);
-    if (eventName != undefined) {
-        let editor = vscode.window.activeTextEditor;
-        if (editor != undefined) {
-            let fileName = path_1.basename(editor.document.fileName);
-            if (fileName.endsWith("event.dart")) {
-                if (!editor.document.isDirty) {
-                    let editPos;
-                    for (let i = editor.document.lineCount; i > 0; i--) {
-                        let p1 = new vscode.Position(i, 0);
-                        let p2 = new vscode.Position(i, 10);
-                        let r = new vscode.Range(p1, p2);
-                        if (editor.document.getText(r).startsWith("}")) {
-                            editPos = p1;
-                            i = 0;
-                        }
-                    }
-                    editor.edit((edit) => {
-                        let event = getEventContent(eventName, fileName);
-                        edit.insert(editPos, `  ${event}\n`);
-                    });
-                }
-                else {
-                    vscode.window.showErrorMessage("Please save current file before using this command.");
-                }
-            }
-            else {
-                vscode.window.showErrorMessage("Not in a bloc event file.");
-            }
+    const editor = vscode.window.activeTextEditor;
+    if (editor != undefined) {
+        const { document } = editor;
+        const eventName = yield promptForEventName(document);
+        if (eventName != undefined) {
+            const bloc = bloc_1.Bloc.fromDocument(document);
+            const blocFilePath = path_1.join(path_1.dirname(document.fileName), bloc.blocFileName);
+            editBlocFile(blocFilePath);
         }
     }
 });
+function editBlocFile(blocFilePath) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let blocFile = yield vscode.workspace.openTextDocument(blocFilePath);
+        let blocEdit = new vscode.WorkspaceEdit();
+        blocEdit.insert(blocFile.uri, new vscode.Position(blocFile.lineCount, 0), "//comment");
+        vscode.workspace.applyEdit(blocEdit);
+    });
+}
 function getEventContent(eventName, fileName) {
     let className = string_functions_1.toPascalCase(string_functions_1.removeDartExtension(fileName));
     let pName = string_functions_1.capitalizeFirstLetter(eventName);
     let result = `const factory ${className}.${eventName}() = _${pName};`;
     return result;
 }
-function createMapEventToState(eventName) { }
+function promptForEventName(currentDoc) {
+    let options = {
+        placeHolder: "event name",
+    };
+    return new Promise((res, rej) => __awaiter(this, void 0, void 0, function* () {
+        const fileName = path_1.basename(currentDoc.fileName);
+        if (fileName.endsWith("bloc.dart") ||
+            fileName.endsWith("event.dart") ||
+            fileName.endsWith("state.dart")) {
+            let eventName = yield vscode.window.showInputBox(options);
+            if (eventName != undefined) {
+                res(eventName);
+            }
+            else {
+                vscode.window.showErrorMessage("event name cannot be empty");
+                res(undefined);
+            }
+        }
+        else {
+            vscode.window.showErrorMessage("Your are not in a valid bloc file. Unable to create new event");
+            res(undefined);
+        }
+    }));
+}
 //# sourceMappingURL=create_new_event.js.map

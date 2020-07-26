@@ -1,10 +1,12 @@
-import { join } from "path";
+import { join, basename } from "path";
 import {
   getBlocContent,
   getBlocEventContent,
   getBlocStateContent,
 } from "../util/content_function";
 import { BlocFile } from "./bloc_file";
+import { toPascalCase } from "../util/string_functions";
+import { TextDocument } from "vscode";
 
 export class Bloc {
   private name: string;
@@ -23,32 +25,57 @@ export class Bloc {
     this.eventName = this.name + "_event";
   }
 
+  static fromDocument(doc: TextDocument): Bloc {
+    let blocName = "";
+    const filename = basename(doc.fileName);
+    if (filename.endsWith("_bloc.dart"))
+      blocName = filename.replace("_bloc.dart", "");
+    else if (filename.endsWith("_state.dart"))
+      blocName = filename.replace("_state.dart", "");
+    else if (filename.endsWith("_event.dart"))
+      blocName = filename.replace("_event.dart", "");
+    return new this(blocName + "_bloc");
+  }
+
   getBlocName() {
     return this.blocName;
   }
-
+  get blocFileName() {
+    return this.toFileName(this.blocName);
+  }
   getBlocFileName() {
     return this.toFileName(this.blocName);
   }
-
+  get stateFileName() {
+    return this.toFileName(this.stateName);
+  }
   getStateFileName() {
     return this.toFileName(this.stateName);
   }
-
+  get eventFileName() {
+    return this.toFileName(this.eventName);
+  }
   getEventFileName() {
     return this.toFileName(this.eventName);
   }
-
-  getBlocClass() {
-    return this.toPascalCase(this.blocName);
+  get blocAsPascal() {
+    return toPascalCase(this.blocName);
   }
-
+  getBlocClass() {
+    return toPascalCase(this.blocName);
+  }
+  get stateNameAsPascal() {
+    return toPascalCase(this.stateName);
+  }
   getStateClass() {
-    return this.toPascalCase(this.stateName);
+    return toPascalCase(this.stateName);
+  }
+  get eventNameAsPascal() {
+    return toPascalCase(this.eventName);
   }
 
   getEventClass() {
-    return this.toPascalCase(this.eventName);
+    return toPascalCase(this.eventName);
   }
 
   getBlocFiles(rootPath: string): BlocFile[] {
@@ -80,17 +107,5 @@ export class Bloc {
 
   toPathName(rootPath: string, filename: string) {
     return join(rootPath, filename);
-  }
-
-  toPascalCase(string: string) {
-    return `${string}`
-      .replace(new RegExp(/[-_]+/, "g"), " ")
-      .replace(new RegExp(/[^\w\s]/, "g"), "")
-      .replace(
-        new RegExp(/\s+(.)(\w+)/, "g"),
-        ($1, $2, $3) => `${$2.toUpperCase() + $3.toLowerCase()}`
-      )
-      .replace(new RegExp(/\s/, "g"), "")
-      .replace(new RegExp(/\w/), (s) => s.toUpperCase());
   }
 }

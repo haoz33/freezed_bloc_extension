@@ -4,6 +4,7 @@ exports.Bloc = void 0;
 const path_1 = require("path");
 const content_function_1 = require("../util/content_function");
 const bloc_file_1 = require("./bloc_file");
+const string_functions_1 = require("../util/string_functions");
 class Bloc {
     constructor(blocName) {
         if (blocName.includes("_bloc")) {
@@ -16,26 +17,55 @@ class Bloc {
         this.stateName = this.name + "_state";
         this.eventName = this.name + "_event";
     }
+    static fromDocument(doc) {
+        let blocName = "";
+        const filename = path_1.basename(doc.fileName);
+        if (filename.endsWith("_bloc.dart"))
+            blocName = filename.replace("_bloc.dart", "");
+        else if (filename.endsWith("_state.dart"))
+            blocName = filename.replace("_state.dart", "");
+        else if (filename.endsWith("_event.dart"))
+            blocName = filename.replace("_event.dart", "");
+        return new this(blocName + "_bloc");
+    }
     getBlocName() {
         return this.blocName;
+    }
+    get blocFileName() {
+        return this.toFileName(this.blocName);
     }
     getBlocFileName() {
         return this.toFileName(this.blocName);
     }
+    get stateFileName() {
+        return this.toFileName(this.stateName);
+    }
     getStateFileName() {
         return this.toFileName(this.stateName);
+    }
+    get eventFileName() {
+        return this.toFileName(this.eventName);
     }
     getEventFileName() {
         return this.toFileName(this.eventName);
     }
+    get blocAsPascal() {
+        return string_functions_1.toPascalCase(this.blocName);
+    }
     getBlocClass() {
-        return this.toPascalCase(this.blocName);
+        return string_functions_1.toPascalCase(this.blocName);
+    }
+    get stateNameAsPascal() {
+        return string_functions_1.toPascalCase(this.stateName);
     }
     getStateClass() {
-        return this.toPascalCase(this.stateName);
+        return string_functions_1.toPascalCase(this.stateName);
+    }
+    get eventNameAsPascal() {
+        return string_functions_1.toPascalCase(this.eventName);
     }
     getEventClass() {
-        return this.toPascalCase(this.eventName);
+        return string_functions_1.toPascalCase(this.eventName);
     }
     getBlocFiles(rootPath) {
         let r = [];
@@ -49,14 +79,6 @@ class Bloc {
     }
     toPathName(rootPath, filename) {
         return path_1.join(rootPath, filename);
-    }
-    toPascalCase(string) {
-        return `${string}`
-            .replace(new RegExp(/[-_]+/, "g"), " ")
-            .replace(new RegExp(/[^\w\s]/, "g"), "")
-            .replace(new RegExp(/\s+(.)(\w+)/, "g"), ($1, $2, $3) => `${$2.toUpperCase() + $3.toLowerCase()}`)
-            .replace(new RegExp(/\s/, "g"), "")
-            .replace(new RegExp(/\w/), (s) => s.toUpperCase());
     }
 }
 exports.Bloc = Bloc;
