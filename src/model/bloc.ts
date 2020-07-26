@@ -10,9 +10,9 @@ import { TextDocument } from "vscode";
 
 export class Bloc {
   private name: string;
-  private blocName: string;
-  private stateName: string;
-  private eventName: string;
+  public blocName: string;
+  public stateName: string;
+  public eventName: string;
 
   constructor(blocName: string) {
     if (blocName.includes("_bloc")) {
@@ -37,44 +37,23 @@ export class Bloc {
     return new this(blocName + "_bloc");
   }
 
-  getBlocName() {
-    return this.blocName;
-  }
   get blocFileName() {
-    return this.toFileName(this.blocName);
-  }
-  getBlocFileName() {
     return this.toFileName(this.blocName);
   }
   get stateFileName() {
     return this.toFileName(this.stateName);
   }
-  getStateFileName() {
-    return this.toFileName(this.stateName);
-  }
   get eventFileName() {
     return this.toFileName(this.eventName);
   }
-  getEventFileName() {
-    return this.toFileName(this.eventName);
-  }
+
   get blocAsPascal() {
-    return toPascalCase(this.blocName);
-  }
-  getBlocClass() {
     return toPascalCase(this.blocName);
   }
   get stateNameAsPascal() {
     return toPascalCase(this.stateName);
   }
-  getStateClass() {
-    return toPascalCase(this.stateName);
-  }
   get eventAsPascal() {
-    return toPascalCase(this.eventName);
-  }
-
-  getEventClass() {
     return toPascalCase(this.eventName);
   }
 
@@ -82,19 +61,19 @@ export class Bloc {
     let r: BlocFile[] = [];
     r.push(
       new BlocFile(
-        this.toPathName(rootPath, this.getBlocFileName()),
+        this.toPathName(rootPath, this.blocFileName),
         getBlocContent(this)
       )
     );
     r.push(
       new BlocFile(
-        this.toPathName(rootPath, this.getEventFileName()),
+        this.toPathName(rootPath, this.eventFileName),
         getBlocEventContent(this)
       )
     );
     r.push(
       new BlocFile(
-        this.toPathName(rootPath, this.getStateFileName()),
+        this.toPathName(rootPath, this.stateFileName),
         getBlocStateContent(this)
       )
     );
