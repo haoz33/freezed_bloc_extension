@@ -35,7 +35,7 @@ async function editBlocFile(
   eventName: string,
   pEventname: string
 ) {
-  let content = `  Stream<${bloc.stateNameAsPascal}> _${eventName}ToState(${pEventname} event) {\n}`;
+  let content = `  Stream<${bloc.stateNameAsPascal}> _${eventName}ToState(${pEventname} event) async* {\n}`;
   await appendToFile(blocFilePath, content);
 }
 
