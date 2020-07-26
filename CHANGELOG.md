@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.2.1]
+
+- feat: add new bloc event using command. (usable but likely to cause bugs)
+
 ## [0.2.0]
 
 - **breaking**: changed from `event` to `gEvent`
