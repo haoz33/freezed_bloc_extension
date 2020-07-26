@@ -61,7 +61,7 @@ class Bloc {
     getStateClass() {
         return string_functions_1.toPascalCase(this.stateName);
     }
-    get eventNameAsPascal() {
+    get eventAsPascal() {
         return string_functions_1.toPascalCase(this.eventName);
     }
     getEventClass() {

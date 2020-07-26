@@ -70,7 +70,7 @@ export class Bloc {
   getStateClass() {
     return toPascalCase(this.stateName);
   }
-  get eventNameAsPascal() {
+  get eventAsPascal() {
     return toPascalCase(this.eventName);
   }
 

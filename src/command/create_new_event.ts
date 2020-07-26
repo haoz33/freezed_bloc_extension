@@ -1,11 +1,9 @@
 import * as vscode from "vscode";
 import { basename, join, dirname } from "path";
-import {
-  capitalizeFirstLetter,
-  toPascalCase,
-  removeDartExtension,
-} from "../util/string_functions";
 import { Bloc } from "../model/bloc";
+import { appendToFile } from "../util/edit_functions";
+import { EventArgument } from "../model/event_argument";
+import { toPascalCase } from "../util/string_functions";
 
 export const createNewBlocEvent = async (uri: vscode.Uri) => {
   const editor = vscode.window.activeTextEditor;
@@ -13,30 +11,67 @@ export const createNewBlocEvent = async (uri: vscode.Uri) => {
     const { document } = editor;
     const eventName = await promptForEventName(document);
     if (eventName != undefined) {
+      const args = await promptForArguments();
       const bloc = Bloc.fromDocument(document);
       const blocFilePath = join(dirname(document.fileName), bloc.blocFileName);
-      editBlocFile(blocFilePath);
+      const eventFilePath = join(
+        dirname(document.fileName),
+        bloc.eventFileName
+      );
+      const pEventName = "_" + toPascalCase(eventName);
+      editBlocFile(blocFilePath, bloc, eventName, pEventName);
+      editEventFile(eventFilePath, bloc, eventName, pEventName, args);
+    } else {
+      vscode.window.showErrorMessage(
+        "Unable to locate current bloc folder. please make sure you are editing file inside a bloc folder"
+      );
     }
   }
 };
 
-async function editBlocFile(blocFilePath: string) {
-  let blocFile = await vscode.workspace.openTextDocument(blocFilePath);
-
-  let blocEdit = new vscode.WorkspaceEdit();
-  blocEdit.insert(
-    blocFile.uri,
-    new vscode.Position(blocFile.lineCount, 0),
-    "//comment"
-  );
-  vscode.workspace.applyEdit(blocEdit);
+async function editBlocFile(
+  blocFilePath: string,
+  bloc: Bloc,
+  eventName: string,
+  pEventname: string
+) {
+  let content = `  Stream<${bloc.stateNameAsPascal}> _${eventName}ToState(${pEventname} event) {\n}`;
+  await appendToFile(blocFilePath, content);
 }
 
-function getEventContent(eventName: string, fileName: string) {
-  let className = toPascalCase(removeDartExtension(fileName));
-  let pName = capitalizeFirstLetter(eventName);
-  let result = `const factory ${className}.${eventName}() = _${pName};`;
-  return result;
+async function editEventFile(
+  eventFilePath: string,
+  bloc: Bloc,
+  eventName: string,
+  pEventName: string,
+  args: EventArgument[]
+) {
+  let arg = args.length > 0 ? args.join(", ") : "";
+  let content = `  const factory ${bloc.eventAsPascal}.${eventName}(${arg}) = ${pEventName};\n`;
+  await appendToFile(eventFilePath, content);
+}
+
+function promptForArguments(): Promise<EventArgument[]> {
+  let options: vscode.InputBoxOptions = {
+    placeHolder: "String arg, String arg2",
+  };
+  return new Promise(async (res, rej) => {
+    let args = await vscode.window.showInputBox(options);
+    if (args != undefined) {
+      if (args.length == 0) {
+        res([]);
+        return;
+      }
+      let result: EventArgument[] = [];
+      args.split(",").forEach((arg) => {
+        let a = arg.trim().split(" ");
+        result.push(new EventArgument(a[0], a[1]));
+      });
+      res(result);
+    } else {
+      res([]);
+    }
+  });
 }
 
 function promptForEventName(

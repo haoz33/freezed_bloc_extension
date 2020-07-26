@@ -1,0 +1,1 @@
+{"version":3,"file":"event_argument.js","sourceRoot":"","sources":["../../src/interface/event_argument.ts"],"names":[],"mappings":";;;AAAA,MAAa,aAAa;IAIxB,YAAY,IAAY,EAAE,IAAY;QACpC,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;IACnB,CAAC;IAED,QAAQ;QACN,OAAO,IAAI,CAAC,IAAI,GAAG,GAAG,GAAG,IAAI,CAAC,IAAI,CAAC;IACrC,CAAC;CACF;AAZD,sCAYC"}
