@@ -1,8 +1,12 @@
 # Change Log
 
+## [0.2.2]
+
+- fix: added `async*` keyword for the generated eventToState function.
+
 ## [0.2.1]
 
-- feat: add new bloc event using command. (usable but likely to cause bugs)
+- feat: add new bloc event using command.`create new bloc event` (usable but likely to cause bugs)
 
 ## [0.2.0]
 
