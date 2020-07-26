@@ -25,7 +25,7 @@ exports.newFreezedBloc = (uri) => __awaiter(void 0, void 0, void 0, function* ()
         let targetDir;
         if (uri != undefined) {
             targetDir = uri.fsPath;
-            let rootDir = path_1.join(targetDir.toString(), bloc.getBlocName());
+            let rootDir = path_1.join(targetDir.toString(), bloc.blocName);
             fs.mkdirSync(rootDir);
             let files = bloc.getBlocFiles(rootDir);
             files.map((file) => __awaiter(void 0, void 0, void 0, function* () {

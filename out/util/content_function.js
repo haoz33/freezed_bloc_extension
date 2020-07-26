@@ -5,39 +5,39 @@ function getBlocContent(bloc) {
     return `import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part '${bloc.getStateFileName()}';
-part '${bloc.getEventFileName()}';
-part '${bloc.getBlocName()}.freezed.dart';
+part '${bloc.stateFileName}';
+part '${bloc.eventFileName}';
+part '${bloc.blocName}.freezed.dart';
 
-class ${bloc.getBlocClass()} extends Bloc<${bloc.getEventClass()},${bloc.getStateClass()}>{
-  ${bloc.getBlocClass()}() : super(_Inital());
+class ${bloc.blocAsPascal} extends Bloc<${bloc.eventAsPascal},${bloc.stateNameAsPascal}>{
+  ${bloc.blocAsPascal}() : super(_Inital());
 
   @override
-  Stream<${bloc.getStateClass()}> mapEventToState(${bloc.getEventClass()} gEvent) async* {
+  Stream<${bloc.stateNameAsPascal}> mapEventToState(${bloc.eventAsPascal} gEvent) async* {
     
   }
 }`;
 }
 exports.getBlocContent = getBlocContent;
 function getBlocStateContent(bloc) {
-    return `part of '${bloc.getBlocFileName()}';
+    return `part of '${bloc.blocFileName}';
 
 @freezed
-abstract class ${bloc.getStateClass()} with _\$${bloc.getStateClass()} {
-  const factory ${bloc.getStateClass()}.inital() = _Inital;
-  const factory ${bloc.getStateClass()}.loadInProgress() = _LoadInProgress;
-  const factory ${bloc.getStateClass()}.loadSuccess() = _LoadSuccess;
-  const factory ${bloc.getStateClass()}.loadFailure() = _LoadFailure;
+abstract class ${bloc.stateNameAsPascal} with _\$${bloc.stateNameAsPascal} {
+  const factory ${bloc.stateNameAsPascal}.inital() = _Inital;
+  const factory ${bloc.stateNameAsPascal}.loadInProgress() = _LoadInProgress;
+  const factory ${bloc.stateNameAsPascal}.loadSuccess() = _LoadSuccess;
+  const factory ${bloc.stateNameAsPascal}.loadFailure() = _LoadFailure;
 
 }`;
 }
 exports.getBlocStateContent = getBlocStateContent;
 function getBlocEventContent(bloc) {
-    return `part of '${bloc.getBlocFileName()}';
+    return `part of '${bloc.blocFileName}';
 
 @freezed
-abstract class ${bloc.getEventClass()} with _\$${bloc.getEventClass()} {
-  const factory ${bloc.getEventClass()}.event1() = Event1;
+abstract class ${bloc.eventAsPascal} with _\$${bloc.eventAsPascal} {
+  const factory ${bloc.eventAsPascal}.event1() = Event1;
 }`;
 }
 exports.getBlocEventContent = getBlocEventContent;

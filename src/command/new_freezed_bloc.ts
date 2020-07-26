@@ -17,7 +17,7 @@ export const newFreezedBloc = async (uri: vscode.Uri) => {
 
     if (uri != undefined) {
       targetDir = uri.fsPath;
-      let rootDir = join(targetDir.toString(), bloc.getBlocName());
+      let rootDir = join(targetDir.toString(), bloc.blocName);
       fs.mkdirSync(rootDir);
       let files = bloc.getBlocFiles(rootDir);
       files.map(async (file) => {

@@ -9,7 +9,6 @@ function activate(context) {
     vscode.commands.registerCommand("extension.createNewBlocEvent", create_new_event_1.createNewBlocEvent);
 }
 exports.activate = activate;
-// this method is called when your extension is deactivated
 function deactivate() { }
 exports.deactivate = deactivate;
 //# sourceMappingURL=extension.js.map
