@@ -2,7 +2,7 @@
   "name": "freezed-bloc",
   "displayName": "freezed_bloc",
   "description": "support for create bloc classes with freezed packages",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "engines": {
     "vscode": "^1.46.0"
   },
@@ -27,12 +27,6 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "snippets": [
-      {
-        "language": "dart",
-        "path": "./snippet/dart_snippet.json"
-      }
-    ],
     "commands": [
       {
         "command": "extension.createFreezedBloc",

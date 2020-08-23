@@ -9,11 +9,11 @@ part '${bloc.eventFileName}';
 part '${bloc.blocName}.freezed.dart';
 
 class ${bloc.blocAsPascal} extends Bloc<${bloc.eventAsPascal},${bloc.stateNameAsPascal}>{
-  ${bloc.blocAsPascal}() : super(_Inital());
+  ${bloc.blocAsPascal}() : super(_Initial());
 
   @override
   Stream<${bloc.stateNameAsPascal}> mapEventToState(${bloc.eventAsPascal} gEvent) async* {
-    
+    yield* gEvent.map();
   }
 }`;
 }
@@ -23,7 +23,7 @@ export function getBlocStateContent(bloc: Bloc) {
 
 @freezed
 abstract class ${bloc.stateNameAsPascal} with _\$${bloc.stateNameAsPascal} {
-  const factory ${bloc.stateNameAsPascal}.inital() = _Inital;
+  const factory ${bloc.stateNameAsPascal}.initial() = _Initial;
   const factory ${bloc.stateNameAsPascal}.loadInProgress() = _LoadInProgress;
   const factory ${bloc.stateNameAsPascal}.loadSuccess() = _LoadSuccess;
   const factory ${bloc.stateNameAsPascal}.loadFailure() = _LoadFailure;

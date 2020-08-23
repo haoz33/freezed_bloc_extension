@@ -1,5 +1,10 @@
 # Change Log
 
+## [0.2.3]
+
+- fix: fixed typo.
+- removed snippets
+
 ## [0.2.2]
 
 - fix: added `async*` keyword for the generated eventToState function.

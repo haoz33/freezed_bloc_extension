@@ -3,7 +3,7 @@ import {
   getBlocContent,
   getBlocEventContent,
   getBlocStateContent,
-} from "../util/content_function";
+} from "../util/template_function";
 import { BlocFile } from "./bloc_file";
 import { toPascalCase } from "../util/string_functions";
 import { TextDocument } from "vscode";
