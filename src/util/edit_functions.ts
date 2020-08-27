@@ -33,3 +33,5 @@ function findLastbracketPos(doc: TextDocument): Position | undefined {
   }
   return undefined;
 }
+
+export async function editMapEventToStateFunction(range: Range) {}

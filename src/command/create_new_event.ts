@@ -4,6 +4,10 @@ import { Bloc } from "../model/bloc";
 import { appendToFile } from "../util/edit_functions";
 import { EventArgument } from "../model/event_argument";
 import { toPascalCase } from "../util/string_functions";
+import { getMapEventToStateSymbol } from "../util/get_map_event_to_state_function";
+import BlocEdit from "../model/bloc_edit";
+import { getDocumentSymbols } from "../util/get_document_symbols";
+import { getEvents } from "../util/get_events";
 
 export const createNewBlocEvent = async (uri: vscode.Uri) => {
   const editor = vscode.window.activeTextEditor;
@@ -19,8 +23,9 @@ export const createNewBlocEvent = async (uri: vscode.Uri) => {
         bloc.eventFileName
       );
       const pEventName = "_" + toPascalCase(eventName);
-      editBlocFile(blocFilePath, bloc, eventName, pEventName);
-      editEventFile(eventFilePath, bloc, eventName, pEventName, args);
+      test(eventFilePath);
+      // editBlocFile(blocFilePath, bloc, eventName, pEventName);
+      // editEventFile(eventFilePath, bloc, eventName, pEventName, args);
     } else {
       vscode.window.showErrorMessage(
         "Unable to locate current bloc folder. please make sure you are editing file inside a bloc folder"
@@ -28,6 +33,14 @@ export const createNewBlocEvent = async (uri: vscode.Uri) => {
     }
   }
 };
+async function test(filePath: string) {
+  let uri = vscode.Uri.file(filePath);
+  let events = await getEvents(uri);
+  console.log(events);
+  // let blocEdit = new BlocEdit(filePath);
+  // await blocEdit.init();
+  // console.log(blocEdit.mapFunctionContent);
+}
 
 async function editBlocFile(
   blocFilePath: string,
