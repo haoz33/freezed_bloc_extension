@@ -1,13 +1,14 @@
 import { getDocumentSymbols } from "./get_document_symbols";
 import { WorkspaceEdit, workspace, Uri, commands, window } from "vscode";
 import BlocEvent from "../model/bloc_event";
-import { getNewMapFunctionTemplate } from "./template_function";
+import { getNewMapFunctionTemplate, getMapTemplate } from "./template_function";
 import { getMapEventToStateSymbol } from "./get_map_event_to_state_function";
 import { findYieldRange } from "./find_yield_range";
 
 export async function appendNewMapFunction(
   blocFileName: string,
-  toFunction: string
+  toFunction: string,
+  mapTemplate: string
 ) {
   const uri = Uri.file(blocFileName);
   const symbols = await getDocumentSymbols(uri);
@@ -20,7 +21,7 @@ export async function appendNewMapFunction(
       const doc = await workspace.openTextDocument(uri);
       let r = findYieldRange(doc, mapFunction);
       if (r != undefined) {
-        fileEdit.insert(uri, r, "\nqaq\n");
+        fileEdit.insert(uri, r, mapTemplate);
       } else {
         window.showErrorMessage(
           'Unable to find "yield* gEvent.map" inside the mapEventToState function'

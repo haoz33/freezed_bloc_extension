@@ -61,6 +61,10 @@ export function getNewEvent(
 
 export function getNewMapFunctionTemplate(blocName: string, event: BlocEvent) {
   let statePascal = pascalCase(blocName + "State");
-  return `  Stream<${statePascal}> _${event.name}ToState(${event.pSealedClass} event) async* {
+  return `  Stream<${statePascal}> ${event.pMapFunction}(${event.pSealedClass} event) async* {
   }\n`;
+}
+
+export function getMapTemplate(event: BlocEvent) {
+  return `\n      ${event.name}: (event) => ${event.pMapFunction}(event),\n`;
 }

@@ -5,6 +5,7 @@ import { appendNewEvent } from "../util/append_new_event";
 import {
   getNewEvent,
   getNewMapFunctionTemplate,
+  getMapTemplate,
 } from "../util/template_function";
 import BlocEvent from "../model/bloc_event";
 import { appendNewMapFunction } from "../util/append_new_map_function";
@@ -18,8 +19,9 @@ export const createNewBlocEvent = async (uri: vscode.Uri) => {
       const e = new BlocEvent(eventName);
       let newEvent = getNewEvent(blocFiles.blocName, e, eventArgs);
       let mapFunctionn = getNewMapFunctionTemplate(blocFiles.blocName, e);
+      let mapTemplate = getMapTemplate(e);
       await appendNewEvent(blocFiles.event, newEvent);
-      await appendNewMapFunction(blocFiles.bloc, mapFunctionn);
+      await appendNewMapFunction(blocFiles.bloc, mapFunctionn, mapTemplate);
     }
   } else {
     vscode.window.showErrorMessage(
