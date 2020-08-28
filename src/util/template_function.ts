@@ -1,4 +1,9 @@
 import { Bloc } from "../model/bloc";
+import { toSealedClass } from "./string_functions";
+import { pascalCase } from "change-case";
+import { EventArgument } from "../model/event_argument";
+import IBlocEvent from "../interface/bloc_event_interface";
+import BlocEvent from "../model/bloc_event";
 
 export function getBlocContent(bloc: Bloc): string {
   return `import 'package:bloc/bloc.dart';
@@ -38,4 +43,24 @@ export function getBlocEventContent(bloc: Bloc) {
 abstract class ${bloc.eventAsPascal} with _\$${bloc.eventAsPascal} {
   const factory ${bloc.eventAsPascal}.event1() = Event1;
 }`;
+}
+
+export function getNewEvent(
+  blocName: string,
+  event: BlocEvent,
+  eventArugments: EventArgument[] = []
+) {
+  let pBloc = pascalCase(blocName);
+  if (eventArugments.length == 0) {
+    return `  const factory ${pBloc}Event.${event.name}() = ${event.pSealedClass};\n`;
+  } else {
+    let args = eventArugments.join(", ");
+    return `  const factory ${pBloc}Event.${event.name}(${args}) = ${event.pSealedClass};\n`;
+  }
+}
+
+export function getNewMapFunctionTemplate(blocName: string, event: BlocEvent) {
+  let statePascal = pascalCase(blocName + "State");
+  return `  Stream<${statePascal}> _${event.name}ToState(${event.pSealedClass} event) async* {
+  }\n`;
 }

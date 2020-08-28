@@ -1,3 +1,5 @@
+import { pascalCase } from "change-case";
+
 export function capitalizeFirstLetter(str: string): string {
   return str[0].toUpperCase() + str.slice(1);
 }
@@ -16,4 +18,8 @@ export function toPascalCase(string: String) {
 
 export function removeDartExtension(filename: String) {
   return filename.replace(".dart", "");
+}
+
+export function toSealedClass(str: string) {
+  return "_" + pascalCase(str);
 }

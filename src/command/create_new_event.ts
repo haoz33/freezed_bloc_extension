@@ -1,68 +1,32 @@
 import * as vscode from "vscode";
-import { basename, join, dirname } from "path";
-import { Bloc } from "../model/bloc";
-import { appendToFile } from "../util/edit_functions";
 import { EventArgument } from "../model/event_argument";
-import { toPascalCase } from "../util/string_functions";
-import { getMapEventToStateSymbol } from "../util/get_map_event_to_state_function";
-import BlocEdit from "../model/bloc_edit";
-import { getDocumentSymbols } from "../util/get_document_symbols";
-import { getEvents } from "../util/get_events";
+import { getBlocFiles } from "../util/get_bloc_files";
+import { appendNewEvent } from "../util/append_new_event";
+import {
+  getNewEvent,
+  getNewMapFunctionTemplate,
+} from "../util/template_function";
+import BlocEvent from "../model/bloc_event";
+import { appendNewMapFunction } from "../util/append_new_map_function";
 
 export const createNewBlocEvent = async (uri: vscode.Uri) => {
-  const editor = vscode.window.activeTextEditor;
-  if (editor != undefined) {
-    const { document } = editor;
-    const eventName = await promptForEventName(document);
+  let blocFiles = getBlocFiles();
+  if (blocFiles != null) {
+    const eventName = await promptForEventName();
     if (eventName != undefined) {
-      const args = await promptForArguments();
-      const bloc = Bloc.fromDocument(document);
-      const blocFilePath = join(dirname(document.fileName), bloc.blocFileName);
-      const eventFilePath = join(
-        dirname(document.fileName),
-        bloc.eventFileName
-      );
-      const pEventName = "_" + toPascalCase(eventName);
-      test(eventFilePath);
-      // editBlocFile(blocFilePath, bloc, eventName, pEventName);
-      // editEventFile(eventFilePath, bloc, eventName, pEventName, args);
-    } else {
-      vscode.window.showErrorMessage(
-        "Unable to locate current bloc folder. please make sure you are editing file inside a bloc folder"
-      );
+      const eventArgs = await promptForArguments();
+      const e = new BlocEvent(eventName);
+      let newEvent = getNewEvent(blocFiles.blocName, e, eventArgs);
+      let mapFunctionn = getNewMapFunctionTemplate(blocFiles.blocName, e);
+      await appendNewEvent(blocFiles.event, newEvent);
+      await appendNewMapFunction(blocFiles.bloc, mapFunctionn);
     }
+  } else {
+    vscode.window.showErrorMessage(
+      "Unable to locate current bloc folder. please make sure you are editing file inside a bloc folder"
+    );
   }
 };
-async function test(filePath: string) {
-  let uri = vscode.Uri.file(filePath);
-  let events = await getEvents(uri);
-  console.log(events);
-  // let blocEdit = new BlocEdit(filePath);
-  // await blocEdit.init();
-  // console.log(blocEdit.mapFunctionContent);
-}
-
-async function editBlocFile(
-  blocFilePath: string,
-  bloc: Bloc,
-  eventName: string,
-  pEventname: string
-) {
-  let content = `  Stream<${bloc.stateNameAsPascal}> _${eventName}ToState(${pEventname} event) async* {\n}`;
-  await appendToFile(blocFilePath, content);
-}
-
-async function editEventFile(
-  eventFilePath: string,
-  bloc: Bloc,
-  eventName: string,
-  pEventName: string,
-  args: EventArgument[]
-) {
-  let arg = args.length > 0 ? args.join(", ") : "";
-  let content = `  const factory ${bloc.eventAsPascal}.${eventName}(${arg}) = ${pEventName};\n`;
-  await appendToFile(eventFilePath, content);
-}
 
 function promptForArguments(): Promise<EventArgument[]> {
   let options: vscode.InputBoxOptions = {
@@ -87,30 +51,16 @@ function promptForArguments(): Promise<EventArgument[]> {
   });
 }
 
-function promptForEventName(
-  currentDoc: vscode.TextDocument
-): Promise<string | undefined> {
+function promptForEventName(): Promise<string | undefined> {
   let options: vscode.InputBoxOptions = {
     placeHolder: "event name",
   };
   return new Promise(async (res, rej) => {
-    const fileName = basename(currentDoc.fileName);
-    if (
-      fileName.endsWith("bloc.dart") ||
-      fileName.endsWith("event.dart") ||
-      fileName.endsWith("state.dart")
-    ) {
-      let eventName = await vscode.window.showInputBox(options);
-      if (eventName != undefined) {
-        res(eventName);
-      } else {
-        vscode.window.showErrorMessage("event name cannot be empty");
-        res(undefined);
-      }
+    let eventName = await vscode.window.showInputBox(options);
+    if (eventName != undefined) {
+      res(eventName);
     } else {
-      vscode.window.showErrorMessage(
-        "Your are not in a valid bloc file. Unable to create new event"
-      );
+      vscode.window.showErrorMessage("event name cannot be empty");
       res(undefined);
     }
   });
