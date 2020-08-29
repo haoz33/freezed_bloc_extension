@@ -2,7 +2,7 @@
   "name": "freezed-bloc",
   "displayName": "freezed_bloc",
   "description": "support for create bloc classes with freezed packages",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "engines": {
     "vscode": "^1.46.0"
   },

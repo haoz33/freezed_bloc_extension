@@ -1,5 +1,10 @@
 # Change Log
 
+## [0.2.4]
+
+- optimized `create new bloc event`.
+- the event file will be automatically saved after the command.
+
 ## [0.2.3]
 
 - fix: fixed typo.
