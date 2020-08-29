@@ -1,4 +1,4 @@
-import { Uri, workspace, Range, WorkspaceEdit } from "vscode";
+import { Uri, workspace, WorkspaceEdit } from "vscode";
 import { getDocumentSymbols } from "./get_document_symbols";
 
 export async function appendNewEvent(fileName: string, event: string) {
@@ -10,5 +10,6 @@ export async function appendNewEvent(fileName: string, event: string) {
     let insertPosition = symbol.range.end.translate(0, -1);
     fileEdit.insert(uri, insertPosition, event);
     await workspace.applyEdit(fileEdit);
+    await (await workspace.openTextDocument(uri)).save();
   }
 }

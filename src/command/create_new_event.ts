@@ -16,6 +16,7 @@ export const createNewBlocEvent = async (uri: vscode.Uri) => {
     const eventName = await promptForEventName();
     if (eventName != undefined) {
       const eventArgs = await promptForArguments();
+
       const e = new BlocEvent(eventName);
       let newEvent = getNewEvent(blocFiles.blocName, e, eventArgs);
       let mapFunctionn = getNewMapFunctionTemplate(blocFiles.blocName, e);
