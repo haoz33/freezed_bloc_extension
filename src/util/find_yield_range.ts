@@ -8,7 +8,8 @@ export function findYieldRange(doc: TextDocument, mapFunction: DocumentSymbol) {
     let r = new Range(startPos, endPos);
 
     if (doc.getText(r).includes("gEvent.map(")) {
-      return new Position(y, doc.getText(r).length);
+      let pos = doc.getText(r).indexOf("(") + 1;
+      return new Position(y, pos);
     }
   }
   return undefined;
