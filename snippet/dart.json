@@ -4,5 +4,23 @@
     "body": [
       "context.bloc<${1:Name}Bloc>().add(${1:Name}Event.${2:event}($3));"
     ]
+  },
+  "create a maybeMap with yield": {
+    "prefix": "sMaybeMap",
+    "body": [
+      "yield state.maybeMap(",
+      "  ${1:stateA}: (cState){$2},",
+      "  orElse:()=>state,",
+      ");"
+    ]
+  },
+  "create a maybeMap with yield*": {
+    "prefix": "sMaybeMap*",
+    "body": [
+      "yield* state.maybeMap(",
+      "  ${1:stateA}: (cState) async* {$2},",
+      "  orElse:() async* {yield state;},",
+      ");"
+    ]
   }
 }
