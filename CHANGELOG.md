@@ -1,5 +1,10 @@
 # Change Log
 
+## [0.2.5]
+
+- feat: new snippets (`fadd`,`maybeMap`,`maybeMap*`)
+- removed event1 from the generated event file.
+
 ## [0.2.4]
 
 - optimized `create new bloc event`.

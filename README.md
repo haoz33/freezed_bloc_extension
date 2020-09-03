@@ -12,6 +12,7 @@ create new freezed bloc
 
 1. create bloc folder with freezed state and event class.
 2. create a new event with ease.
+3. snippets
 
 ## Known Issues
 
