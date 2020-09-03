@@ -10,6 +10,7 @@
     "body": [
       "yield state.maybeMap(",
       "  ${1:stateA}: (cState){$2},",
+      "  $3",
       "  orElse:()=>state,",
       ");"
     ]
@@ -19,6 +20,7 @@
     "body": [
       "yield* state.maybeMap(",
       "  ${1:stateA}: (cState) async* {$2},",
+      "  $3",
       "  orElse:() async* {yield state;},",
       ");"
     ]
