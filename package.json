@@ -27,6 +27,12 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "snippets": [
+      {
+        "language": "dart",
+        "path": "./snippet/dart.json"
+      }
+    ],
     "commands": [
       {
         "command": "extension.createFreezedBloc",

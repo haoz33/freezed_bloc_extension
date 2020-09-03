@@ -1,0 +1,8 @@
+{
+  "create a context bloc event": {
+    "prefix": "fadd",
+    "body": [
+      "context.bloc<${1:Name}Bloc>().add(${1:Name}Event.${2:event}($3));"
+    ]
+  }
+}
