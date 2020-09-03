@@ -41,7 +41,6 @@ export function getBlocEventContent(bloc: Bloc) {
 
 @freezed
 abstract class ${bloc.eventAsPascal} with _\$${bloc.eventAsPascal} {
-  const factory ${bloc.eventAsPascal}.event1() = Event1;
 }`;
 }
 
