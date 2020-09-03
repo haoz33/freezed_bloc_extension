@@ -6,7 +6,7 @@
     ]
   },
   "create a maybeMap with yield": {
-    "prefix": "sMaybeMap",
+    "prefix": "maybeMap",
     "body": [
       "yield state.maybeMap(",
       "  ${1:stateA}: (cState){$2},",
@@ -15,7 +15,7 @@
     ]
   },
   "create a maybeMap with yield*": {
-    "prefix": "sMaybeMap*",
+    "prefix": "maybeMap*",
     "body": [
       "yield* state.maybeMap(",
       "  ${1:stateA}: (cState) async* {$2},",
