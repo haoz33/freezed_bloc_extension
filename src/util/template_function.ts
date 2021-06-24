@@ -27,7 +27,7 @@ export function getBlocStateContent(bloc: Bloc) {
   return `part of '${bloc.blocFileName}';
 
 @freezed
-abstract class ${bloc.stateNameAsPascal} with _\$${bloc.stateNameAsPascal} {
+class ${bloc.stateNameAsPascal} with _\$${bloc.stateNameAsPascal} {
   const factory ${bloc.stateNameAsPascal}.initial() = _Initial;
   const factory ${bloc.stateNameAsPascal}.loadInProgress() = _LoadInProgress;
   const factory ${bloc.stateNameAsPascal}.loadSuccess() = _LoadSuccess;
@@ -40,7 +40,7 @@ export function getBlocEventContent(bloc: Bloc) {
   return `part of '${bloc.blocFileName}';
 
 @freezed
-abstract class ${bloc.eventAsPascal} with _\$${bloc.eventAsPascal} {
+class ${bloc.eventAsPascal} with _\$${bloc.eventAsPascal} {
 }`;
 }
 
