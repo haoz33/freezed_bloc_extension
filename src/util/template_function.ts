@@ -14,12 +14,15 @@ part '${bloc.eventFileName}';
 part '${bloc.blocName}.freezed.dart';
 
 class ${bloc.blocAsPascal} extends Bloc<${bloc.eventAsPascal},${bloc.stateNameAsPascal}>{
-  ${bloc.blocAsPascal}() : super(_Initial());
-
-  @override
-  Stream<${bloc.stateNameAsPascal}> mapEventToState(${bloc.eventAsPascal} gEvent) async* {
-    yield* gEvent.map();
+  ${bloc.blocAsPascal}() : super(${bloc.stateNameAsPascal}.initial()){
+    on<_GetSomethingEvent>(_mapGetSomethingEventToState);
+    on<_ExampleEvent>(_mapExampleEventToState);
   }
+
+  void _mapGetSomethingEventToState(_GetSomethingEvent event, Emitter<${bloc.stateNameAsPascal}> emit) {}
+  
+  void _mapExampleEventToState(_ExampleEvent event, Emitter<${bloc.stateNameAsPascal}> emit) {}
+
 }`;
 }
 
@@ -30,8 +33,6 @@ export function getBlocStateContent(bloc: Bloc) {
 class ${bloc.stateNameAsPascal} with _\$${bloc.stateNameAsPascal} {
   const factory ${bloc.stateNameAsPascal}.initial() = _Initial;
   const factory ${bloc.stateNameAsPascal}.loadInProgress() = _LoadInProgress;
-  const factory ${bloc.stateNameAsPascal}.loadSuccess() = _LoadSuccess;
-  const factory ${bloc.stateNameAsPascal}.loadFailure() = _LoadFailure;
 
 }`;
 }
@@ -41,6 +42,8 @@ export function getBlocEventContent(bloc: Bloc) {
 
 @freezed
 class ${bloc.eventAsPascal} with _\$${bloc.eventAsPascal} {
+  const factory ${bloc.eventAsPascal}.getSomething() = _GetSomethingEvent;
+  const factory ${bloc.eventAsPascal}.exampleEvent() = _ExampleEvent;
 }`;
 }
 
