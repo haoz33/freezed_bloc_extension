@@ -14,7 +14,7 @@ part '${bloc.eventFileName}';
 part '${bloc.blocName}.freezed.dart';
 
 class ${bloc.blocAsPascal} extends Bloc<${bloc.eventAsPascal},${bloc.stateNameAsPascal}>{
-  ${bloc.blocAsPascal}() : super(${bloc.stateNameAsPascal}.initial()){
+  ${bloc.blocAsPascal}() : super(const ${bloc.stateNameAsPascal}.initial()) {
     on<_GetSomethingEvent>(_mapGetSomethingEventToState);
     on<_ExampleEvent>(_mapExampleEventToState);
   }
@@ -33,7 +33,6 @@ export function getBlocStateContent(bloc: Bloc) {
 class ${bloc.stateNameAsPascal} with _\$${bloc.stateNameAsPascal} {
   const factory ${bloc.stateNameAsPascal}.initial() = _Initial;
   const factory ${bloc.stateNameAsPascal}.loadInProgress() = _LoadInProgress;
-
 }`;
 }
 
