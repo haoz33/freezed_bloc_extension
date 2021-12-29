@@ -15,14 +15,8 @@ part '${bloc.blocName}.freezed.dart';
 
 class ${bloc.blocAsPascal} extends Bloc<${bloc.eventAsPascal},${bloc.stateNameAsPascal}>{
   ${bloc.blocAsPascal}() : super(const ${bloc.stateNameAsPascal}.initial()) {
-    on<_GetSomethingEvent>(_mapGetSomethingEventToState);
-    on<_ExampleEvent>(_mapExampleEventToState);
+
   }
-
-  void _mapGetSomethingEventToState(_GetSomethingEvent event, Emitter<${bloc.stateNameAsPascal}> emit) {}
-  
-  void _mapExampleEventToState(_ExampleEvent event, Emitter<${bloc.stateNameAsPascal}> emit) {}
-
 }`;
 }
 
@@ -41,8 +35,6 @@ export function getBlocEventContent(bloc: Bloc) {
 
 @freezed
 class ${bloc.eventAsPascal} with _\$${bloc.eventAsPascal} {
-  const factory ${bloc.eventAsPascal}.getSomething() = _GetSomethingEvent;
-  const factory ${bloc.eventAsPascal}.exampleEvent() = _ExampleEvent;
 }`;
 }
 
