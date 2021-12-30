@@ -15,7 +15,6 @@ part '${bloc.blocName}.freezed.dart';
 
 class ${bloc.blocAsPascal} extends Bloc<${bloc.eventAsPascal},${bloc.stateNameAsPascal}>{
   ${bloc.blocAsPascal}() : super(const ${bloc.stateNameAsPascal}.initial()) {
-
   }
 }`;
 }
@@ -61,7 +60,7 @@ export function getNewMapFunctionTemplate(blocName: string, event: BlocEvent) {
 }
 
 export function getMapTemplate(event: BlocEvent) {
-  return `\n     on<${event.pSealedClass}>(${getMethodName(event)});\n`;
+  return `\n    on<${event.pSealedClass}>(${getMethodName(event)});`;
 }
 
 function getMethodName(event: BlocEvent){
