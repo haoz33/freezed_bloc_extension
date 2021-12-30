@@ -1,5 +1,4 @@
 import * as vscode from "vscode";
-import { EventArgument } from "../model/event_argument";
 import { getBlocFiles } from "../util/get_bloc_files";
 import { appendNewEvent } from "../util/append_new_event";
 import {

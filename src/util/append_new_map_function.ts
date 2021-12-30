@@ -1,7 +1,5 @@
 import { getDocumentSymbols } from "./get_document_symbols";
 import { WorkspaceEdit, workspace, Uri, commands, window } from "vscode";
-// import BlocEvent from "../model/bloc_event";
-// import { getNewMapFunctionTemplate, getMapTemplate } from "./template_function";
 import { getMapEventToStateSymbol } from "./get_map_event_to_state_function";
 import { findOnRange} from "./find_yield_range";
 

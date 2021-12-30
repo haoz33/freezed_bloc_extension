@@ -1,8 +1,5 @@
 import { Bloc } from "../model/bloc";
-import { toSealedClass } from "./string_functions";
 import { pascalCase } from "change-case";
-import { EventArgument } from "../model/event_argument";
-import IBlocEvent from "../interface/bloc_event_interface";
 import BlocEvent from "../model/bloc_event";
 
 export function getBlocContent(bloc: Bloc): string {
@@ -43,11 +40,7 @@ export function getNewEvent(
   eventArugments: String,
 ) {
   let pBloc = pascalCase(blocName);
-  // if (eventArugments.length == 0) {
-    // return `  const factory ${pBloc}Event.${event.name}() = ${event.pSealedClass};\n`;
-  // } else {
-    return `  const factory ${pBloc}Event.${event.name}(${eventArugments}) = ${event.pSealedClass};\n`;
-  // }
+  return `  const factory ${pBloc}Event.${event.name}(${eventArugments}) = ${event.pSealedClass};\n`;
 }
 
 export function getNewEmitterFunctionTemplate(blocName: string, event: BlocEvent) {
