@@ -40,18 +40,17 @@ class ${bloc.eventAsPascal} with _\$${bloc.eventAsPascal} {
 export function getNewEvent(
   blocName: string,
   event: BlocEvent,
-  eventArugments: EventArgument[] = []
+  eventArugments: String,
 ) {
   let pBloc = pascalCase(blocName);
-  if (eventArugments.length == 0) {
-    return `  const factory ${pBloc}Event.${event.name}() = ${event.pSealedClass};\n`;
-  } else {
-    let args = eventArugments.join(", ");
-    return `  const factory ${pBloc}Event.${event.name}(${args}) = ${event.pSealedClass};\n`;
-  }
+  // if (eventArugments.length == 0) {
+    // return `  const factory ${pBloc}Event.${event.name}() = ${event.pSealedClass};\n`;
+  // } else {
+    return `  const factory ${pBloc}Event.${event.name}(${eventArugments}) = ${event.pSealedClass};\n`;
+  // }
 }
 
-export function getNewMapFunctionTemplate(blocName: string, event: BlocEvent) {
+export function getNewEmitterFunctionTemplate(blocName: string, event: BlocEvent) {
   let statePascal = pascalCase(blocName + "State");
   let eventClass = event.pSealedClass;
 
@@ -59,11 +58,11 @@ export function getNewMapFunctionTemplate(blocName: string, event: BlocEvent) {
   }\n`;
 }
 
-export function getMapTemplate(event: BlocEvent) {
+export function getEventHandlerTemplate(event: BlocEvent) {
   return `\n    on<${event.pSealedClass}>(${getMethodName(event)});`;
 }
 
 function getMethodName(event: BlocEvent){
-  let eventClassName = event.pSealedClass.replace("_","");
+  let eventClassName = event.sealedClass;
   return `_map${eventClassName}ToState`;
 }
