@@ -2,11 +2,12 @@
 
 ## Exmaple usage
 
-create new event
-![Alt Text](./example_gifs/create_new_event.gif)
+create new new bloc
+![Alt Text](./example_gifs/create_bloc.gif)
 
-create new freezed bloc
-![Alt Text](./example_gifs/create_freezed_bloc_usage.gif)
+create new new event
+![Alt Text](./example_gifs/add_event.gif)
+
 
 ## Features
 
