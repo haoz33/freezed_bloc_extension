@@ -1,9 +1,7 @@
 import { getDocumentSymbols } from "./get_document_symbols";
 import { WorkspaceEdit, workspace, Uri, commands, window } from "vscode";
-import BlocEvent from "../model/bloc_event";
-import { getNewMapFunctionTemplate, getMapTemplate } from "./template_function";
 import { getMapEventToStateSymbol } from "./get_map_event_to_state_function";
-import { findYieldRange } from "./find_yield_range";
+import { findOnRange} from "./find_yield_range";
 
 export async function appendNewMapFunction(
   blocFileName: string,
@@ -19,17 +17,17 @@ export async function appendNewMapFunction(
     let mapFunction = getMapEventToStateSymbol(symbol);
     if (mapFunction != undefined) {
       const doc = await workspace.openTextDocument(uri);
-      let r = findYieldRange(doc, mapFunction);
+      let r = findOnRange(doc, mapFunction);
       if (r != undefined) {
         fileEdit.insert(uri, r, mapTemplate);
       } else {
         window.showErrorMessage(
-          'Unable to find "yield* gEvent.map" inside the mapEventToState function'
+          'Unable to find the constructor (adding on<>)'
         );
       }
     } else {
       window.showErrorMessage(
-        'Unable to find "mapEventToState" function in the Bloc class'
+        'Unable to find the constructor'
       );
     }
 

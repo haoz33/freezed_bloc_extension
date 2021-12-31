@@ -9,7 +9,7 @@ import { toPascalCase } from "../util/string_functions";
 import { TextDocument } from "vscode";
 
 export class Bloc {
-  private name: string;
+  public name: string;
   public blocName: string;
   public stateName: string;
   public eventName: string;
@@ -20,7 +20,7 @@ export class Bloc {
     } else {
       this.name = blocName;
     }
-    this.blocName = blocName;
+    this.blocName = this.name + "_bloc";
     this.stateName = this.name + "_state";
     this.eventName = this.name + "_event";
   }

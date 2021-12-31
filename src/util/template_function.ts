@@ -1,8 +1,5 @@
 import { Bloc } from "../model/bloc";
-import { toSealedClass } from "./string_functions";
 import { pascalCase } from "change-case";
-import { EventArgument } from "../model/event_argument";
-import IBlocEvent from "../interface/bloc_event_interface";
 import BlocEvent from "../model/bloc_event";
 
 export function getBlocContent(bloc: Bloc): string {
@@ -14,11 +11,7 @@ part '${bloc.eventFileName}';
 part '${bloc.blocName}.freezed.dart';
 
 class ${bloc.blocAsPascal} extends Bloc<${bloc.eventAsPascal},${bloc.stateNameAsPascal}>{
-  ${bloc.blocAsPascal}() : super(_Initial());
-
-  @override
-  Stream<${bloc.stateNameAsPascal}> mapEventToState(${bloc.eventAsPascal} gEvent) async* {
-    yield* gEvent.map();
+  ${bloc.blocAsPascal}() : super(const ${bloc.stateNameAsPascal}.initial()) {
   }
 }`;
 }
@@ -30,9 +23,6 @@ export function getBlocStateContent(bloc: Bloc) {
 class ${bloc.stateNameAsPascal} with _\$${bloc.stateNameAsPascal} {
   const factory ${bloc.stateNameAsPascal}.initial() = _Initial;
   const factory ${bloc.stateNameAsPascal}.loadInProgress() = _LoadInProgress;
-  const factory ${bloc.stateNameAsPascal}.loadSuccess() = _LoadSuccess;
-  const factory ${bloc.stateNameAsPascal}.loadFailure() = _LoadFailure;
-
 }`;
 }
 
@@ -47,23 +37,25 @@ class ${bloc.eventAsPascal} with _\$${bloc.eventAsPascal} {
 export function getNewEvent(
   blocName: string,
   event: BlocEvent,
-  eventArugments: EventArgument[] = []
+  eventArugments: String,
 ) {
   let pBloc = pascalCase(blocName);
-  if (eventArugments.length == 0) {
-    return `  const factory ${pBloc}Event.${event.name}() = ${event.pSealedClass};\n`;
-  } else {
-    let args = eventArugments.join(", ");
-    return `  const factory ${pBloc}Event.${event.name}(${args}) = ${event.pSealedClass};\n`;
-  }
+  return `  const factory ${pBloc}Event.${event.name}(${eventArugments}) = ${event.pSealedClass};\n`;
 }
 
-export function getNewMapFunctionTemplate(blocName: string, event: BlocEvent) {
+export function getNewEmitterFunctionTemplate(blocName: string, event: BlocEvent) {
   let statePascal = pascalCase(blocName + "State");
-  return `  Stream<${statePascal}> ${event.pMapFunction}(${event.pSealedClass} event) async* {
+  let eventClass = event.pSealedClass;
+
+  return `  void ${getMethodName(event)}(${eventClass} event, Emitter<${statePascal}> emit) {
   }\n`;
 }
 
-export function getMapTemplate(event: BlocEvent) {
-  return `\n      ${event.name}: (event) => ${event.pMapFunction}(event),\n`;
+export function getEventHandlerTemplate(event: BlocEvent) {
+  return `\n    on<${event.pSealedClass}>(${getMethodName(event)});`;
+}
+
+function getMethodName(event: BlocEvent){
+  let eventClassName = event.sealedClass;
+  return `_map${eventClassName}ToState`;
 }

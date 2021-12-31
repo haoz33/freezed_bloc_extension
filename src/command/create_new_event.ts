@@ -1,11 +1,10 @@
 import * as vscode from "vscode";
-import { EventArgument } from "../model/event_argument";
 import { getBlocFiles } from "../util/get_bloc_files";
 import { appendNewEvent } from "../util/append_new_event";
 import {
   getNewEvent,
-  getNewMapFunctionTemplate,
-  getMapTemplate,
+  getNewEmitterFunctionTemplate,
+  getEventHandlerTemplate,
 } from "../util/template_function";
 import BlocEvent from "../model/bloc_event";
 import { appendNewMapFunction } from "../util/append_new_map_function";
@@ -15,12 +14,11 @@ export const createNewBlocEvent = async (uri: vscode.Uri) => {
   if (blocFiles != null) {
     const eventName = await promptForEventName();
     if (eventName != undefined) {
-      const eventArgs = await promptForArguments();
-
+      const eventArgs = await promptForStringArguments();
       const e = new BlocEvent(eventName);
       let newEvent = getNewEvent(blocFiles.blocName, e, eventArgs);
-      let mapFunctionn = getNewMapFunctionTemplate(blocFiles.blocName, e);
-      let mapTemplate = getMapTemplate(e);
+      let mapFunctionn = getNewEmitterFunctionTemplate(blocFiles.blocName, e);
+      let mapTemplate = getEventHandlerTemplate(e);
       await appendNewEvent(blocFiles.event, newEvent);
       await appendNewMapFunction(blocFiles.bloc, mapFunctionn, mapTemplate);
     }
@@ -31,25 +29,16 @@ export const createNewBlocEvent = async (uri: vscode.Uri) => {
   }
 };
 
-function promptForArguments(): Promise<EventArgument[]> {
+function promptForStringArguments(): Promise<String> {
   let options: vscode.InputBoxOptions = {
-    placeHolder: "String arg, String arg2",
+    placeHolder: "type the event parameters",
   };
   return new Promise(async (res, rej) => {
     let args = await vscode.window.showInputBox(options);
     if (args != undefined) {
-      if (args.length == 0) {
-        res([]);
-        return;
-      }
-      let result: EventArgument[] = [];
-      args.split(",").forEach((arg) => {
-        let a = arg.trim().split(" ");
-        result.push(new EventArgument(a[0], a[1]));
-      });
-      res(result);
+      res(args);
     } else {
-      res([]);
+      res('');
     }
   });
 }
