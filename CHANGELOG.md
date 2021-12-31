@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.3.0]
+- removed bloc suffix on the generated bloc folder.
+- template updated to match the bloc version ^8.0.0. Thanks to [jorgesarabia](https://github.com/jorgesarabia)
+
 ## [0.2.5]
 
 - feat: new snippets (`fadd`,`maybeMap`,`maybeMap*`)
