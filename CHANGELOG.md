@@ -1,5 +1,8 @@
 # Change Log
 
+## [0.3.1]
+- Changeed event handler method name to `_onEventName`. Thanks to [elliotsayes](https://github.com/elliotsayes)
+
 ## [0.3.0]
 - removed bloc suffix on the generated bloc folder.
 - template updated to match the bloc version ^8.0.0. Thanks to [jorgesarabia](https://github.com/jorgesarabia)

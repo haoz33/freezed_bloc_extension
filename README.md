@@ -1,5 +1,3 @@
-# ## The create template functionality is avaiable at [bloc extension](https://marketplace.visualstudio.com/items?itemName=FelixAngelov.bloc)
-
 ## Exmaple usage
 
 create new new bloc
