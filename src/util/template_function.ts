@@ -57,5 +57,5 @@ export function getEventHandlerTemplate(event: BlocEvent) {
 
 function getMethodName(event: BlocEvent){
   let eventClassName = event.sealedClass;
-  return `_map${eventClassName}ToState`;
+  return `_on${eventClassName}`;
 }
