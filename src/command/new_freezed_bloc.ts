@@ -1,9 +1,17 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
-import { join, dirname } from "path";
+import { join } from "path";
 import { Bloc } from "../model/bloc";
+import extensionConfig from "../config/config";
 
 export const newFreezedBloc = async (uri: vscode.Uri) => {
+  if (extensionConfig.packageImport == undefined) {
+    vscode.window.showErrorMessage(
+      "Unable to found bloc package used in the project. Please add bloc/flutter_bloc to the pubspec.yaml."
+    );
+    return;
+  }
+
   let options: vscode.InputBoxOptions = {
     value: "_bloc",
     valueSelection: [0, 0],

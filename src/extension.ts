@@ -1,8 +1,10 @@
 import * as vscode from "vscode";
 import { newFreezedBloc } from "./command/new_freezed_bloc";
 import { createNewBlocEvent } from "./command/create_new_event";
+import extensionConfig from "./config/config";
 
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
+  await extensionConfig.initialization();
   vscode.commands.registerCommand(
     "extension.createFreezedBloc",
     newFreezedBloc
@@ -13,4 +15,6 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
-export function deactivate() {}
+export async function deactivate() {
+  await extensionConfig.dispose();
+}

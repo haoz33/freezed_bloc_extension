@@ -1,9 +1,10 @@
 import { Bloc } from "../model/bloc";
 import { pascalCase } from "change-case";
 import BlocEvent from "../model/bloc_event";
+import extensionConfig from "../config/config";
 
 export function getBlocContent(bloc: Bloc): string {
-  return `import 'package:bloc/bloc.dart';
+  return `${extensionConfig.packageImport}
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part '${bloc.stateFileName}';
@@ -37,17 +38,22 @@ class ${bloc.eventAsPascal} with _\$${bloc.eventAsPascal} {
 export function getNewEvent(
   blocName: string,
   event: BlocEvent,
-  eventArugments: String,
+  eventArugments: String
 ) {
   let pBloc = pascalCase(blocName);
   return `  const factory ${pBloc}Event.${event.name}(${eventArugments}) = ${event.pSealedClass};\n`;
 }
 
-export function getNewEmitterFunctionTemplate(blocName: string, event: BlocEvent) {
+export function getNewEmitterFunctionTemplate(
+  blocName: string,
+  event: BlocEvent
+) {
   let statePascal = pascalCase(blocName + "State");
   let eventClass = event.pSealedClass;
 
-  return `  void ${getMethodName(event)}(${eventClass} event, Emitter<${statePascal}> emit) {
+  return `  void ${getMethodName(
+    event
+  )}(${eventClass} event, Emitter<${statePascal}> emit) {
   }\n`;
 }
 
@@ -55,7 +61,7 @@ export function getEventHandlerTemplate(event: BlocEvent) {
   return `\n    on<${event.pSealedClass}>(${getMethodName(event)});`;
 }
 
-function getMethodName(event: BlocEvent){
+function getMethodName(event: BlocEvent) {
   let eventClassName = event.sealedClass;
   return `_on${eventClassName}`;
 }

@@ -38,7 +38,7 @@ function promptForStringArguments(): Promise<String> {
     if (args != undefined) {
       res(args);
     } else {
-      res('');
+      res("");
     }
   });
 }
