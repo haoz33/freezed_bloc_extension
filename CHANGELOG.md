@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.4.0]
+
+- feat: now bloc import will match the bloc package used in the pubspec.yaml, or you can override in the setting.
+
 ## [0.3.1]
 - Changeed event handler method name to `_onEventName`. Thanks to [elliotsayes](https://github.com/elliotsayes)
 
