@@ -22,14 +22,14 @@ export default class StateClassConfig {
   setConfig() {
     this.initialState = workspace
       .getConfiguration("freezedBloc")
-      .get("initialState")!;
+      .get("initialState") as string;
     this.defaultStates = workspace
       .getConfiguration("freezedBloc")
-      .get("defaultStates")!;
+      .get("defaultStates") as string[];
 
     this.isPrivate = workspace
       .getConfiguration("freezedBloc")
-      .get("privateDefaultStates")!;
+      .get("privateDefaultStates") as boolean;
 
     if (this.defaultStates.includes(this.initialState) === false) {
       window.showErrorMessage(
