@@ -1,5 +1,10 @@
 # Change Log
 
+## [0.5.0]
+
+- feat: Added settings to custom the generated state class.
+- fix: fixed where the `on<Event>(_onEvent)` is not able to add to a empty constructor.
+
 ## [0.4.0]
 
 - feat: now bloc import will match the bloc package used in the pubspec.yaml, or you can override in the setting.
