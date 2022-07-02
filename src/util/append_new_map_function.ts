@@ -1,7 +1,7 @@
 import { getDocumentSymbols } from "./get_document_symbols";
-import { WorkspaceEdit, workspace, Uri, commands, window } from "vscode";
+import { WorkspaceEdit, workspace, Uri, window } from "vscode";
 import { getMapEventToStateSymbol } from "./get_map_event_to_state_function";
-import { findOnRange} from "./find_yield_range";
+import findConstructor from "./find_constructor";
 
 export async function appendNewMapFunction(
   blocFileName: string,
@@ -17,18 +17,15 @@ export async function appendNewMapFunction(
     let mapFunction = getMapEventToStateSymbol(symbol);
     if (mapFunction != undefined) {
       const doc = await workspace.openTextDocument(uri);
-      let r = findOnRange(doc, mapFunction);
-      if (r != undefined) {
-        fileEdit.insert(uri, r, mapTemplate);
+
+      const constructorPosition = findConstructor(doc, symbols);
+      if (constructorPosition != undefined) {
+        fileEdit.insert(uri, constructorPosition, mapTemplate);
       } else {
-        window.showErrorMessage(
-          'Unable to find the constructor (adding on<>)'
-        );
+        window.showErrorMessage("Unable to find the constructor (adding on<>)");
       }
     } else {
-      window.showErrorMessage(
-        'Unable to find the constructor'
-      );
+      window.showErrorMessage("Unable to find the constructor");
     }
 
     fileEdit.insert(uri, toFunctionInsertPosition, toFunction);
