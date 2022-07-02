@@ -1,12 +1,10 @@
 import { join, basename } from "path";
-import {
-  getBlocContent,
-  getBlocEventContent,
-  getBlocStateContent,
-} from "../util/template_function";
 import { BlocFile } from "./bloc_file";
 import { toPascalCase } from "../util/string_functions";
 import { TextDocument } from "vscode";
+import { getFreezedStateClassTemplate } from "../templates/get_freezed_state_class_template";
+import { getBlocClassTemplate } from "../templates/get_bloc_class_template";
+import { getBlocEventContent } from "../templates/get_event_class_template";
 
 export class Bloc {
   public name: string;
@@ -62,7 +60,7 @@ export class Bloc {
     r.push(
       new BlocFile(
         this.toPathName(rootPath, this.blocFileName),
-        getBlocContent(this)
+        getBlocClassTemplate(this)
       )
     );
     r.push(
@@ -74,7 +72,7 @@ export class Bloc {
     r.push(
       new BlocFile(
         this.toPathName(rootPath, this.stateFileName),
-        getBlocStateContent(this)
+        getFreezedStateClassTemplate(this)
       )
     );
     return r;

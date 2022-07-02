@@ -1,13 +1,11 @@
 import * as vscode from "vscode";
 import { getBlocFiles } from "../util/get_bloc_files";
 import { appendNewEvent } from "../util/append_new_event";
-import {
-  getNewEvent,
-  getNewEmitterFunctionTemplate,
-  getEventHandlerTemplate,
-} from "../util/template_function";
 import BlocEvent from "../model/bloc_event";
 import { appendNewMapFunction } from "../util/append_new_map_function";
+import { getNewEmitterFunctionTemplate } from "../templates/get_new_emitter_function_template";
+import { getEventHandlerTemplate } from "../templates/get_event_handler_template";
+import { getNewEventTemplate } from "../templates/get_new_event_template";
 
 export const createNewBlocEvent = async (uri: vscode.Uri) => {
   let blocFiles = getBlocFiles();
@@ -16,7 +14,7 @@ export const createNewBlocEvent = async (uri: vscode.Uri) => {
     if (eventName != undefined) {
       const eventArgs = await promptForStringArguments();
       const e = new BlocEvent(eventName);
-      let newEvent = getNewEvent(blocFiles.blocName, e, eventArgs);
+      let newEvent = getNewEventTemplate(blocFiles.blocName, e, eventArgs);
       let mapFunctionn = getNewEmitterFunctionTemplate(blocFiles.blocName, e);
       let mapTemplate = getEventHandlerTemplate(e);
       await appendNewEvent(blocFiles.event, newEvent);
